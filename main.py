@@ -1,15 +1,16 @@
-import os
 import pyuac # pip install pyuac
 import subprocess
+from tkinter import messagebox
 
+def run_as_admin():
+    if not pyuac.isUserAdmin():
+        pyuac.runAsAdmin()
+    else:
+        subprocess.run('slmgr /skms kms.digiboy.ir', shell=True)
+        subprocess.run('slmgr /ato', shell=True)
 
-if not pyuac.isUserAdmin():
-    pyuac.runAsAdmin()
-else:
-    commands = [
-        'slmgr /skms kms.digiboy.ir',
-        'slmgr /ato'
-    ]
+        messagebox.showinfo(title='Успешно', message='Windows activated!\n')
 
-for command in commands:
-    subprocess.run(command, shell=True)
+if __name__ == '__main__':
+    run_as_admin()
+
